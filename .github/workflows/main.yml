@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest #ubuntu:18.04
     
     # set custom environment variables
-    env:
-      # set env and view paths for spack
-      SPACK_ENV_PATH: "$GITHUB_WORKSPACE/spack/env"
-      SPACK_ENV_VIEW: "$SPACK_ENV_PATH/view"
+    #env:
+    #  # set env and view paths for spack
+    #  SPACK_ENV_PATH: "$GITHUB_WORKSPACE/spack/env"
+    #  SPACK_ENV_VIEW: "$SPACK_ENV_PATH/view"
     
     steps:
       # checkout base repository
@@ -39,11 +39,9 @@ jobs:
       - id: create-env
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh
-          #echo "$GITHUB_WORKSPACE/spack/bin" >> $GITHUB_PATH
           spack env create myenv ${{ github.workspace }}/spack.yaml
           spack env activate --sh myenv
-          spack find
-          spack list
+          spack install
           
           
           
