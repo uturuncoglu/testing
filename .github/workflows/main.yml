@@ -40,8 +40,10 @@ jobs:
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh
           spack env create myenv ${{ github.workspace }}/spack.yaml
+          spack env list
           spack env activate --sh myenv
-          spack install
+          spack env status
+          #spack install
           
           
           
