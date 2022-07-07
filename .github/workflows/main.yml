@@ -38,10 +38,11 @@ jobs:
       # create build environment
       - id: create-env
         run: |
-          pushd spack
-          bin/spack env create myenv ${{ github.workspace }}/spack.yaml
-          bin/spack env activate myenv
-          bin/spack find
+          echo "$GITHUB_WORKSPACE/spack/bin" >> $GITHUB_PATH
+          spack env create myenv ${{ github.workspace }}/spack.yaml
+          spack env activate --sh myenv
+          spack find
+          spack list
           
           
           
