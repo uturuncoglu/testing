@@ -38,7 +38,8 @@ jobs:
       # create build environment
       - id: create-env
         run: |
-          echo "$GITHUB_WORKSPACE/spack/bin" >> $GITHUB_PATH
+          . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh
+          #echo "$GITHUB_WORKSPACE/spack/bin" >> $GITHUB_PATH
           spack env create myenv ${{ github.workspace }}/spack.yaml
           spack env activate --sh myenv
           spack find
