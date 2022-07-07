@@ -6,7 +6,7 @@ on:
 
 jobs:
   create_docker_file:
-    runs-on: ubuntu:18.04
+    runs-on: ubuntu-latest #ubuntu:18.04
     steps:
       # prepare environment
       - id: load-env
