@@ -5,9 +5,14 @@ on:
     branches: [ main ]
 
 jobs:
-  create_docker_file:
+  create_environment:
     runs-on: ubuntu-latest #ubuntu:18.04
     steps:
+      # checkout base repository
+      - id: checkout-repo
+        uses: actions/checkout@v3
+        with:
+          ref: main   
       # prepare core environment
       - id: load-env
         run: |
