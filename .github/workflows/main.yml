@@ -40,7 +40,7 @@ jobs:
         run: |
           pushd spack
           bin/spack env create myenv ${{ github.workspace }}/spack.yaml
-          bin/spack env activate --sh myenv
+          bin/spack env activate myenv
           bin/spack find
           
           
