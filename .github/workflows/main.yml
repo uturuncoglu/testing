@@ -39,8 +39,8 @@ jobs:
       - id: create-env
         run: |
           pushd spack
-          bin/spack env create --dir "$SPACK_ENV_PATH" --with-view "$SPACK_ENV_VIEW" ${{ github.workspace }}/spack.yaml
-          bin/spack env activate --sh "$SPACK_ENV_PATH"
+          bin/spack env create myenv ${{ github.workspace }}/spack.yaml
+          bin/spack env activate --sh myenv
           bin/spack find
           
           
