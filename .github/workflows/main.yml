@@ -6,15 +6,22 @@ on:
 
 jobs:
   create_docker_file:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu:18.04
     steps:
+      # prepare environment
+      - id: load-env
+        run: |
+          sudo apt-get update
+          sudo apt-get install build-essential binutils-dev gfortran python-dev python-yaml ca-certificates
+      # checkout spack to create environment
       - id: checkout-spack
         uses: actions/checkout@v3
         with:
           repository: uturuncoglu/spack
           path: spack
           ref: hotfix/esmf
-      - id: create-dockerfile
-        run: |
-          pushd spack
-          bin/spack containerize > Dockerfile
+      # create dockerfile
+      #- id: create-dockerfile
+      #  run: |
+      #    pushd spack
+      #    bin/spack containerize > Dockerfile
