@@ -1,0 +1,27 @@
+spack:
+  specs:
+  - cmake
+  - git
+  - vim 
+  - fms
+  - esmf@8.2.0
+  - parallelio@2.5.7
+
+  container:
+    os_packages:
+      final:
+      - build-essential
+      - binutils-dev
+      - gfortran
+      - python-dev
+      - python-yaml
+      - ca-certificates
+    strip: false
+
+    images:
+      os: "ubuntu:18.04"
+      spack:
+        url: "https://github.com/uturuncoglu/spack.git"
+        ref: "hotfix/esmf"
+        resolve_sha: False      
+        verify: False
