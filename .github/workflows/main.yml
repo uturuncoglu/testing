@@ -13,11 +13,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: main   
+      
       # prepare core environment
       - id: load-env
         run: |
           sudo apt-get update
           sudo apt-get install build-essential binutils-dev gfortran python-dev python-yaml ca-certificates
+      
       # checkout spack to create build environment
       - id: checkout-spack
         uses: actions/checkout@v3
@@ -25,15 +27,14 @@ jobs:
           repository: uturuncoglu/spack
           path: spack
           ref: hotfix/esmf
+      
       # create build environment
       - id: create-env
         run: |
-          #pushd spack
-          #ls -al ${{ github.workspace }}
-          #ls -al .
-          #ls -al ../
-          spack/bin/spack env create myenv ${{ github.workspace }}/spack.yaml
-          spack/bin/spack env activate --sh myenv
+          pushd spack
+          bin/spack env create myenv ${{ github.workspace }}/spack.yaml
+          bin/spack env activate --sh myenv
+          bin/spack install
           
           
           
