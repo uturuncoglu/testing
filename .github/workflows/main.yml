@@ -1,0 +1,20 @@
+name: comptest
+ 
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  create_docker_file:
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout-spack
+        uses: actions/checkout@v3
+        with:
+          repository: uturuncoglu/spack
+          path: spack
+          ref: hotfix/esmf
+      - id: create-dockerfile
+        run: |
+          pushd spack
+          bin/spack containerize > Dockerfile
