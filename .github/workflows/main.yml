@@ -25,10 +25,11 @@ jobs:
         run: |
           pushd spack
           ls -al ${{ github.workspace }}
-          ls -al ../${{ github.workspace }}
+          ls -al .
+          ls -al ../
           bin/spack env create myenv ${{ github.workspace }}/spack.yaml
-          bin/spack env activate --sh myenv
-          bin/spack env activate myenv
+          #bin/spack env activate --sh myenv
+          #bin/spack env activate myenv
           
           
           
