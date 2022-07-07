@@ -43,7 +43,7 @@ jobs:
           spack env list
           spack env activate myenv
           spack env status
-          #spack install
+          spack install
           
           
           
