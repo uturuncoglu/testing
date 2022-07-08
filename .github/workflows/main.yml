@@ -6,13 +6,7 @@ on:
 
 jobs:
   create_environment:
-    runs-on: ubuntu-latest #ubuntu:18.04
-    
-    # set custom environment variables
-    #env:
-    #  # set env and view paths for spack
-    #  SPACK_ENV_PATH: "$GITHUB_WORKSPACE/spack/env"
-    #  SPACK_ENV_VIEW: "$SPACK_ENV_PATH/view"
+    runs-on: ubuntu-latest
     
     steps:
       # checkout base repository
@@ -25,6 +19,7 @@ jobs:
       - id: load-env
         run: |
           sudo apt-get update
+          sudo apt-get install unzip file gringo
           sudo apt-get install build-essential binutils-dev gfortran python-dev python-yaml ca-certificates
       
       # checkout spack to create build environment
@@ -39,11 +34,19 @@ jobs:
       - id: create-env
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh
-          spack -v solve zlib
-          spack env create myenv ${{ github.workspace }}/spack.yaml
-          spack env activate myenv
-          spack env status
-          spack install
+          spack -e ${{ github.workspace }} concretize -f
+          spack -e ${{ github.workspace }} install -j3
+          ls ~/.spack-ci
+          ls ${{ github.workspace }}
+          
+      # restore build environment from cache
+      - id: restore-env
+        uses: actions/cache@v2
+        with:
+          path: ~/.spack-ci
+          key: ${{ hashFiles('**/spack.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-spack      
           
           
           
