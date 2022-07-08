@@ -3,7 +3,7 @@ name: comptest
 on:
   push:
     branches: [ main ]
-
+  
 jobs:
   create_environment:
     runs-on: ubuntu-latest
@@ -48,6 +48,7 @@ jobs:
       # create build environment
       - id: install-env
         run: |
+          . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh 
           spack -e ${{ github.workspace }} install -j3
           
           
