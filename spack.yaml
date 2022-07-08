@@ -3,6 +3,11 @@ spack:
     unify: true
   specs:
   - cmake
+  - git
+  - vim 
+  - fms
+  - esmf@8.2.0
+  - parallelio@2.5.7
   view: ~/.spack-ci/view
   config:
     source_cache: ~/.spack-ci/source_cache
