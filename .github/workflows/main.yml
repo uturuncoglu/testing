@@ -35,9 +35,6 @@ jobs:
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh
           spack -e ${{ github.workspace }} concretize -f
-          spack -e ${{ github.workspace }} install -j3
-          ls ~/.spack-ci
-          ls ${{ github.workspace }}
           
       # restore build environment from cache
       - id: restore-env
@@ -46,7 +43,12 @@ jobs:
           path: ~/.spack-ci
           key: ${{ hashFiles('**/spack.lock') }}
           restore-keys: |
-            ${{ matrix.os }}-spack      
+            spack
+            
+      # create build environment
+      - id: install-env
+        run: |
+          spack -e ${{ github.workspace }} install -j3
           
           
           
