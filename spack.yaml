@@ -3,12 +3,10 @@ spack:
     unify: true
   specs:
   - cmake
-  view: ~/.setup-spack/view
+  view: ~/.spack-ci/view
   config:
-    source_cache: ~/.setup-spack/source_cache
-    misc_cache: ~/.setup-spack/misc_cache
-    test_cache: ~/.setup-spack/test_cache
+    source_cache: ~/.spack-ci/source_cache
+    misc_cache: ~/.spack-ci/misc_cache
+    test_cache: ~/.spack-ci/test_cache
     install_tree:
-      root: ~/.setup-spack/opt
-    modules:
-      enable: []
+      root: ~/.spack-ci/opt
