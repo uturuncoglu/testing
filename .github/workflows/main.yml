@@ -34,15 +34,15 @@ jobs:
           repository: uturuncoglu/spack
           path: spack
           ref: hotfix/esmf
-      
+
       # create build environment
       - id: create-env
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh
           spack env create myenv ${{ github.workspace }}/spack.yaml
-          spack env list
           spack env activate myenv
           spack env status
+          spack -v solve zlib
           spack install
           
           
