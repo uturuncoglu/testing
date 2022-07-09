@@ -62,6 +62,7 @@ jobs:
       # build data models
       - id: install-cdeps
         run: |
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
           echo $ESMFMKFILE
           echo $HOME
