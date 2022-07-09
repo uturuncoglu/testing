@@ -50,3 +50,27 @@ jobs:
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh 
           spack -e ${{ github.workspace }} install -j3
+      
+      # checkout data models
+      - id: checkout-cdeps
+        uses: actions/checkout@v3
+        with:
+          repository: uturuncoglu/CDEPS
+          path: cdeps
+          ref: hotfix/std_build      
+      
+      # build data models
+      - id: install-cdeps
+        run: |
+          cd cdeps
+          mkdir build
+          cd build
+          cmake -DCMAKE_INSTALL_PREFIX=../install \
+            -DPIO_C_LIBRARY=~/.spack-ci/view/lib \
+            -DPIO_C_INCLUDE_DIR=~/.spack-ci/view/include \
+            -DPIO_Fortran_LIBRARY=~/.spack-ci/view/lib \
+            -DPIO_Fortran_INCLUDE_DIR=~/.spack-ci/view/include \
+            -DCMAKE_Fortran_FLAGS="-ffree-line-length-none -ffixed-line-length-none" ../
+          make
+          make install
+          
