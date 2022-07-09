@@ -50,6 +50,3 @@ jobs:
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh 
           spack -e ${{ github.workspace }} install -j3
-          
-          
-          
