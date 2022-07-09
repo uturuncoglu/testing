@@ -3,11 +3,14 @@ name: comptest
 on:
   push:
     branches: [ main ]
-  
+
 jobs:
   create_environment:
     runs-on: ubuntu-latest
     
+    env:
+      ESMFMKFILE: ~/.spack-ci/view/lib/esmf.mk
+  
     steps:
       # checkout base repository
       - id: checkout-repo
@@ -62,6 +65,7 @@ jobs:
       # build data models
       - id: install-cdeps
         run: |
+          echo $ESMFMKFILE
           cd cdeps
           mkdir build
           cd build
