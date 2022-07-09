@@ -59,15 +59,11 @@ jobs:
           path: cdeps
           ref: hotfix/std_build      
       
-      # build data models
+      # build and install data models
       - id: install-cdeps
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
-          echo $ESMFMKFILE
-          echo $HOME
-          find $HOME/. -name "esmf.mk"
-          cat $ESMFMKFILE
           cd cdeps
           mkdir build
           cd build
@@ -79,4 +75,23 @@ jobs:
             -DCMAKE_Fortran_FLAGS="-ffree-line-length-none -ffixed-line-length-none" ../
           make
           make install
+
+      # checkout component
+      - id: checkout-noahmp
+        uses: actions/checkout@v3
+        with:
+          repository: NOAA-EMC/noahmp
+          path: noahmp
+          ref: feature/nuopc_cap
           
+      # build and install component
+      - id: install-noahmp
+        run: |
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
+          export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk      
+          cd noahmp
+          mkdir build
+          cd build
+          cmake -DCMAKE_INSTALL_PREFIX=../install ../
+          make
+          make install
