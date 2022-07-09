@@ -66,6 +66,9 @@ jobs:
       - id: install-cdeps
         run: |
           echo $ESMFMKFILE
+          echo $HOME
+          find $HOME/. -name "esmf.mk"
+          cat $ESMFMKFILE
           cd cdeps
           mkdir build
           cd build
