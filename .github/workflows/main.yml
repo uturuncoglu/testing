@@ -89,8 +89,9 @@ jobs:
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
-          export NetCDF_ROOT=`nc-config --prefix`
+          #export NetCDF_ROOT=`nc-config --prefix`
           cd noahmp
+          rm -f cmake/FindNetCDF.cmake
           mkdir build
           cd build
           cmake -DCMAKE_INSTALL_PREFIX=../install ../
