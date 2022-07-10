@@ -89,10 +89,9 @@ jobs:
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
-          ls -al /home/runner/.spack-ci/view/lib/*mpi*
           cd noahmp
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=../install ../
+          cmake -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=$HOME/.spack-ci/view ../
           make
           make install
