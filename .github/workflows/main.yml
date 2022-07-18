@@ -3,6 +3,11 @@ name: comptest
 on:
   push:
     branches: [ main ]
+  pull_request:
+  # this is required to prevent auto-removing cache entries after 7-days 
+  schedule:
+    - cron: '*/0 0 * * MON'
+    - cron: '*/0 0 * * FRI'
 
 jobs:
   create_environment:
@@ -89,7 +94,7 @@ jobs:
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
-          #export NetCDF_ROOT=`nc-config --prefix`
+          export NetCDF_ROOT=`nc-config --prefix`
           cd noahmp
           #rm -f cmake/FindNetCDF.cmake
           mkdir build
