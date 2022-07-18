@@ -90,16 +90,15 @@ jobs:
           ref: feature/nuopc_cap
           
       # build and install component
-      #- id: install-noahmp
-      #  run: |
-      #    export PATH=$HOME/.spack-ci/view/bin:$PATH
-      #    export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
-      #    export NetCDF_ROOT=`nc-config --prefix`
-      #    cd noahmp
-      #    #rm -f cmake/FindNetCDF.cmake
-      #    mkdir build
-      #    cd build
-      #    cmake -DCMAKE_INSTALL_PREFIX=../install ../
-      #    cat /home/runner/work/testing/testing/noahmp/build/CMakeFiles/CMakeError.log
-      #    make
-      #    make install
+      - id: install-noahmp
+        run: |
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
+          export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
+          export NetCDF_ROOT=`nc-config --prefix`
+          cd noahmp
+          mkdir build
+          cd build
+          cmake -DCMAKE_INSTALL_PREFIX=../install ../
+          cat /home/runner/work/testing/testing/noahmp/build/CMakeFiles/CMakeError.log
+          make
+          make install
