@@ -102,3 +102,4 @@ jobs:
           cmake -DCMAKE_INSTALL_PREFIX=../install ../
           make VERBOSE=1
           make install VERBOSE=1
+
