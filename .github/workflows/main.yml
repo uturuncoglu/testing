@@ -124,6 +124,11 @@ jobs:
           cd driver
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=../install ../
+          cmake -DCMAKE_INSTALL_PREFIX=../install \ 
+            -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
+            -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
+            -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
+            -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include \
+            ../
           make
           make install
