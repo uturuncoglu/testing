@@ -96,7 +96,7 @@ jobs:
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
           export NetCDF_ROOT=`nc-config --prefix`
           export FC=gfortran
-          export CPPFLAGS="$HOME/.spack-ci/view/ınclude"
+          export FCFLAGS="$HOME/.spack-ci/view/include"
           cd noahmp
           mkdir build
           cd build
