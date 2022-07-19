@@ -1,5 +1,0 @@
-name: testing
-on:
-  repository_dispatch:
-    types:
-      - manual-trigger
