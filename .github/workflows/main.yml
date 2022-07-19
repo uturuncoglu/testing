@@ -119,8 +119,10 @@ jobs:
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
-          #export NetCDF_ROOT=`nc-config --prefix`
-          #export FC=gfortran
+          export ATM_LIB_DIR=${{ env.INSTALL_DIR }}/lib
+          export ATM_INC_DIR=${{ env.INSTALL_DIR }}/include
+          export LND_LIB_DIR=${{ env.INSTALL_DIR }}/lib
+          export LND_INC_DIR=${{ env.INSTALL_DIR }}/mod
           cd driver
           mkdir build
           cd build
