@@ -134,11 +134,10 @@ jobs:
           ls -al
           ls -al ../
           pwd
-          #cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
-          #  -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
-          #  -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
-          #  -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
-          #  -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include \
-          #  .
+          cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
+            -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
+            -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
+            -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
+            -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include ../
           #make
           #make install
