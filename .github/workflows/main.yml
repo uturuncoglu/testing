@@ -100,7 +100,9 @@ jobs:
           cd noahmp
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=../install ../
+          cmake -DCMAKE_INSTALL_PREFIX=../install \
+            -DCMAKE_Fortran_FLAGS="-I$HOME/.spack-ci/view/include" \
+            ../
           make VERBOSE=1
           make install VERBOSE=1
 
