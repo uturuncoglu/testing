@@ -13,11 +13,6 @@ on:
 jobs:
   create_environment:
     runs-on: ubuntu-latest
-
-    env:
-      CC: mpicc
-      FC: mpif90
-      CXX: mpicxx
       
     steps:
       # checkout base repository
@@ -103,11 +98,11 @@ jobs:
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
           export NetCDF_ROOT=`nc-config --prefix`
+          export FC=gfortran
           cd noahmp
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=../install \
-            -DCMAKE_fortran_COMPILER=gfortran ../
+          cmake -DCMAKE_INSTALL_PREFIX=../install ../
           make VERBOSE=1
           make install VERBOSE=1
 
