@@ -90,6 +90,8 @@ jobs:
           ref: feature/nuopc_cap
           
       # build and install component
+      # need to install with openmp support since fms build with it
+      # TODO: update fms in spack.yaml as fms~openmp to build it without openmp support 
       - id: install-noahmp
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
@@ -99,7 +101,7 @@ jobs:
           cd noahmp
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=../install ../
+          cmake -DCMAKE_INSTALL_PREFIX=../install -DOPENMP=ON ../
           make VERBOSE=1
           make install VERBOSE=1
 
