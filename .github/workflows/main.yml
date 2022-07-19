@@ -72,7 +72,7 @@ jobs:
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
-          cd cdeps
+          cd ${{ github.workspace }}/cdeps
           mkdir build
           cd build
           cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \
@@ -101,7 +101,7 @@ jobs:
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
           export NetCDF_ROOT=`nc-config --prefix`
           export FC=gfortran
-          cd noahmp
+          cd ${{ github.workspace }}/noahmp
           mkdir build
           cd build
           cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DOPENMP=ON ../
@@ -128,7 +128,7 @@ jobs:
           export ATM_INC_DIR=${{ env.INSTALL_DIR }}/include
           export LND_LIB_DIR=${{ env.INSTALL_DIR }}/lib
           export LND_INC_DIR=${{ env.INSTALL_DIR }}/mod
-          #cd ${{ github.workspace }}/driver
+          cd ${{ github.workspace }}/driver
           #mkdir build
           #cd build
           cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
