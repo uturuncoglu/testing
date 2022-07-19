@@ -117,15 +117,16 @@ jobs:
       # build and install driver
       - id: install-driver
         run: |
-          ls -al ${{ github.workspace }}
+          ls -al ${{ github.workspace }}/driver
           ls -al $HOME
+          echo ${{ env.INSTALL_DIR }}
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
           export ATM_LIB_DIR=${{ env.INSTALL_DIR }}/lib
           export ATM_INC_DIR=${{ env.INSTALL_DIR }}/include
           export LND_LIB_DIR=${{ env.INSTALL_DIR }}/lib
           export LND_INC_DIR=${{ env.INSTALL_DIR }}/mod
-          cd driver
+          cd ${{ github.workspace }}/driver
           mkdir build
           cd build
           cmake -DCMAKE_INSTALL_PREFIX=../install \ 
