@@ -12,6 +12,9 @@ on:
 jobs:
   create_environment:
     runs-on: ubuntu-latest
+    
+    env:
+      INSTALL_DIR: $HOME/install
       
     steps:
       # checkout base repository
@@ -72,7 +75,7 @@ jobs:
           cd cdeps
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=$HOME/components \
+          cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \
             -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
             -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
@@ -101,7 +104,7 @@ jobs:
           cd noahmp
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=$HOME/components -DOPENMP=ON ../
+          cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DOPENMP=ON ../
           make
           make install
           ls $HOME/components
@@ -117,8 +120,8 @@ jobs:
       # build and install driver
       - id: install-driver
         run: |
-          ls -al ${{ github.workspace }}/driver
-          ls -al $HOME
+          #ls -al ${{ github.workspace }}/driver
+          #ls -al $HOME
           echo ${{ env.INSTALL_DIR }}
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
@@ -126,14 +129,14 @@ jobs:
           export ATM_INC_DIR=${{ env.INSTALL_DIR }}/include
           export LND_LIB_DIR=${{ env.INSTALL_DIR }}/lib
           export LND_INC_DIR=${{ env.INSTALL_DIR }}/mod
-          cd ${{ github.workspace }}/driver
-          mkdir build
-          cd build
-          cmake -DCMAKE_INSTALL_PREFIX=../install \ 
+          #cd ${{ github.workspace }}/driver
+          #mkdir build
+          #cd build
+          cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
             -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
             -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include \
-            ../
+            .
           make
           make install
