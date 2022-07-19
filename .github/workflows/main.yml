@@ -40,6 +40,7 @@ jobs:
       - id: create-env
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh
+          spack compiler find
           spack -e ${{ github.workspace }} concretize -f
           
       # restore build environment from cache
