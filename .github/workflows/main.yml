@@ -41,6 +41,7 @@ jobs:
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh
           spack compiler find
+          cat /home/runner/.spack/linux/compilers.yaml
           spack -e ${{ github.workspace }} concretize -f
           
       # restore build environment from cache
