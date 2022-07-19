@@ -117,6 +117,8 @@ jobs:
       # build and install driver
       - id: install-driver
         run: |
+          ls -al ${{ github.workspace }}
+          ls -al $HOME
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
           export ATM_LIB_DIR=${{ env.INSTALL_DIR }}/lib
