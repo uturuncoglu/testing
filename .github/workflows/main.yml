@@ -101,7 +101,8 @@ jobs:
           cd noahmp
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=../install ../
+          cmake -DCMAKE_INSTALL_PREFIX=../install \
+            -DCMAKE_fortran_COMPILER=gfortran ../
           make VERBOSE=1
           make install VERBOSE=1
 
