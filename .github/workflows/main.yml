@@ -13,7 +13,12 @@ on:
 jobs:
   create_environment:
     runs-on: ubuntu-latest
-  
+
+    env:
+      CC: mpicc
+      FC: mpif90
+      CXX: mpicxx
+      
     steps:
       # checkout base repository
       - id: checkout-repo
