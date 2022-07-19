@@ -72,7 +72,7 @@ jobs:
           cd cdeps
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=../install \
+          cmake -DCMAKE_INSTALL_PREFIX=$HOME/components \
             -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
             -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
@@ -101,8 +101,29 @@ jobs:
           cd noahmp
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=../install -DOPENMP=ON ../
-          make VERBOSE=1
-          make install VERBOSE=1
+          cmake -DCMAKE_INSTALL_PREFIX=$HOME/components -DOPENMP=ON ../
+          make
+          make install
+          ls $HOME/components
 
+      # checkout generic driver
+      - id: checkout-driver
+        uses: actions/checkout@v3
+        with:
+          repository: uturuncoglu/GenericNUOPCDriver
+          path: driver
+          ref: main
 
+      # build and install driver
+      - id: install-driver
+        run: |
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
+          export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
+          #export NetCDF_ROOT=`nc-config --prefix`
+          #export FC=gfortran
+          cd driver
+          mkdir build
+          cd build
+          cmake -DCMAKE_INSTALL_PREFIX=../install ../
+          make
+          make install
