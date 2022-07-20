@@ -119,9 +119,6 @@ jobs:
       # build and install driver
       - id: install-driver
         run: |
-          #ls -al ${{ github.workspace }}/driver
-          #ls -al $HOME
-          echo ${{ env.INSTALL_DIR }}
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
           export ATM_LIB_DIR=${{ env.INSTALL_DIR }}/lib
@@ -129,18 +126,16 @@ jobs:
           export LND_LIB_DIR=${{ env.INSTALL_DIR }}/lib
           export LND_INC_DIR=${{ env.INSTALL_DIR }}/mod
           cd ${{ github.workspace }}/driver
-          mkdir build
-          cd build
-          ls -al
-          ls -al ../
-          ls -al ${{ env.INSTALL_DIR }}/lib
-          ls -al ${{ env.INSTALL_DIR }}/include
-          ls -al ${{ env.INSTALL_DIR }}/mod
-          pwd
-          cmake --trace -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
-            -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
-            -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
-            -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
-            -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include ../
+          #mkdir build
+          #cd build
+          #cmake --trace -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
+          #  -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
+          #  -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
+          #  -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
+          #  -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include ../
           #make
           #make install
+          cmake -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
+            -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
+            -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
+            -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include .
