@@ -19,21 +19,18 @@ jobs:
     steps:
       # checkout base repository
       - name: Checkout Test Repository
-      #- id: checkout-repo
         uses: actions/checkout@v3
         with:
           ref: main   
       
       # prepare core environment
-      - name: Install Core Development Tools      
-      #- id: load-env
+      - name: Install Core Development Tools
         run: |
           sudo apt-get update
           sudo apt-get install unzip file gringo
           sudo apt-get install build-essential binutils-dev gfortran python-dev python-yaml ca-certificates
       
       # checkout spack to create build environment
-      #- id: checkout-spack
       - name: Checkout Spack
         uses: actions/checkout@v3
         with:
@@ -42,14 +39,12 @@ jobs:
           ref: hotfix/esmf
 
       # create build environment
-      #- id: create-env
       - name: Concretize Spack Environment Using YAML Specification
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh
           spack -e ${{ github.workspace }} concretize -f
           
       # restore build environment from cache
-      #- id: restore-env
       - name: Restore Build Environment From Cache
         uses: actions/cache@v2
         with:
@@ -59,15 +54,13 @@ jobs:
             spack
             
       # create build environment
-      #- id: install-env
-      - name: Install Spack Packages      
+      - name: Install Spack Packages
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh 
           spack -e ${{ github.workspace }} install -j3
       
       # checkout data models
-      #- id: checkout-cdeps
-      - name: Checkout CDEPS      
+      - name: Checkout CDEPS
         uses: actions/checkout@v3
         with:
           repository: uturuncoglu/CDEPS
@@ -75,8 +68,7 @@ jobs:
           ref: hotfix/std_build      
       
       # build and install data models
-      #- id: install-cdeps
-      - name: Build and Install CDEPS     
+      - name: Build and Install CDEPS
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
@@ -93,8 +85,7 @@ jobs:
           make install
 
       # checkout component
-      #- id: checkout-noahmp
-      - name: Checkout NoahMP      
+      - name: Checkout NoahMP
         uses: actions/checkout@v3
         with:
           repository: NOAA-EMC/noahmp
@@ -104,8 +95,7 @@ jobs:
       # build and install component
       # need to install with openmp support since fms build with it
       # TODO: update fms in spack.yaml as fms~openmp to build it without openmp support 
-      #- id: install-noahmp
-      - name: Build and Install NoahMP  
+      - name: Build and Install NoahMP
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
@@ -119,8 +109,7 @@ jobs:
           make install
 
       # checkout generic driver
-      - name: Checkout Generic NUOPC Driver       
-      #- id: checkout-driver
+      - name: Checkout Generic NUOPC Driver
         uses: actions/checkout@v3
         with:
           repository: uturuncoglu/GenericNUOPCDriver
@@ -128,8 +117,7 @@ jobs:
           ref: main
 
       # build and install driver
-      #- id: install-driver
-      - name: Build and Install Generic NUOPC Driver         
+      - name: Build and Install Generic NUOPC Driver
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
@@ -144,3 +132,11 @@ jobs:
             -DPIO_PREFIX=$HOME/.spack-ci/view .
           make
           make install
+      
+      # run application, fails due to missing input and configuration files
+      # it is just for testing
+      - name: Run Application
+        run: |
+          mkdir ${{ github.workspace }}/run
+          cd ${{ github.workspace }}/run
+          mpirun --oversubscribe -np 4 --allow-run-as-root ${{ env.INSTALL_DIR }}/bin/driver
