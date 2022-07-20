@@ -128,8 +128,11 @@ jobs:
           export LND_INC_DIR=${{ env.INSTALL_DIR }}/mod
           export FC=mpif90
           cd ${{ github.workspace }}/driver
-          cmake -DPIO_PREFIX=$HOME/.spack-ci/view \
-            -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
-            -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
-            -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
-            -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include .
+          #cmake -DPIO_PREFIX=$HOME/.spack-ci/view \
+          #  -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
+          #  -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
+          #  -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
+          #  -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include .
+          cmake -DPIO_PREFIX=$HOME/.spack-ci/view .
+          make
+          make install
