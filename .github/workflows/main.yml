@@ -137,7 +137,7 @@ jobs:
           ls -al ${{ env.INSTALL_DIR }}/include
           ls -al ${{ env.INSTALL_DIR }}/mod
           pwd
-          cmake --debug-output -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
+          cmake --trace -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
             -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
             -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
