@@ -135,9 +135,9 @@ jobs:
       
       # run application, fails due to missing input and configuration files
       # it is just for testing
-      - name: Run Application
-        run: |
-          export PATH=$HOME/.spack-ci/view/bin:$PATH
-          mkdir ${{ github.workspace }}/run
-          cd ${{ github.workspace }}/run
-          mpirun --oversubscribe -np 4 --allow-run-as-root ${{ env.INSTALL_DIR }}/bin/driver
+      #- name: Run Application
+      #  run: |
+      #    export PATH=$HOME/.spack-ci/view/bin:$PATH
+      #    mkdir ${{ github.workspace }}/run
+      #    cd ${{ github.workspace }}/run
+      #    mpirun --oversubscribe -np 4 --allow-run-as-root ${{ env.INSTALL_DIR }}/bin/driver
