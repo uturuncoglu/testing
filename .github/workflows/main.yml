@@ -126,16 +126,8 @@ jobs:
           export ATM_INC_DIR=${{ env.INSTALL_DIR }}/include
           export LND_LIB_DIR=${{ env.INSTALL_DIR }}/lib
           export LND_INC_DIR=${{ env.INSTALL_DIR }}/mod
+          export FC=mpif90
           cd ${{ github.workspace }}/driver
-          #mkdir build
-          #cd build
-          #cmake --trace -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
-          #  -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
-          #  -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
-          #  -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
-          #  -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include ../
-          #make
-          #make install
           cmake -DPIO_PREFIX=$HOME/.spack-ci/view \
             -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
