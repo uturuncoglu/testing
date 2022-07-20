@@ -121,6 +121,7 @@ jobs:
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           export ESMFMKFILE=$HOME/.spack-ci/view/lib/esmf.mk
+          export NetCDF_ROOT=`nc-config --prefix`
           export ATM_LIB_DIR=${{ env.INSTALL_DIR }}/lib
           export ATM_INC_DIR=${{ env.INSTALL_DIR }}/include
           export LND_LIB_DIR=${{ env.INSTALL_DIR }}/lib
@@ -135,7 +136,8 @@ jobs:
           #  -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include ../
           #make
           #make install
-          cmake -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
+          cmake -DPIO_PREFIX=$HOME/.spack-ci/view \
+            -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
             -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include .
