@@ -133,8 +133,11 @@ jobs:
           cd build
           ls -al
           ls -al ../
+          ls -al ${{ env.INSTALL_DIR }}/lib
+          ls -al ${{ env.INSTALL_DIR }}/include
+          ls -al ${{ env.INSTALL_DIR }}/mod
           pwd
-          cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
+          cmake --debug-output -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} \ 
             -DPIO_C_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
             -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
