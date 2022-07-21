@@ -132,7 +132,15 @@ jobs:
             -DPIO_PREFIX=$HOME/.spack-ci/view .
           make
           make install
-      
+
+      # run application, fails due to missing input and configuration files
+      # it is just for testing
+      #- name: Populate Run Directory
+      #  run: |
+      #    export PATH=$HOME/.spack-ci/view/bin:$PATH
+      #    mkdir ${{ github.workspace }}/run
+      #    mkdir ${{ github.workspace }}/INPUT_DATM
+
       # run application, fails due to missing input and configuration files
       # it is just for testing
       #- name: Run Application
