@@ -132,14 +132,6 @@ jobs:
             -DPIO_PREFIX=$HOME/.spack-ci/view .
           make
           make install
-            
-      # get required data for components
-      - name: Populate Run Directory
-        run: |
-          export PATH=$HOME/.spack-ci/view/bin:$PATH
-          mkdir -p ${{ github.workspace }}/run/INPUT
-          cd ${{ github.workspace }}/run/INPUT
-          python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
 
       # restore input data from cache
       - name: Restore Input Data From Cache
@@ -149,7 +141,16 @@ jobs:
           path: ${{ github.workspace }}/run/INPUT
           key: input-${{ hashFiles('**/file_checksum.lock') }}
           restore-keys: |
-            input-          
+            input-   
+            
+      # get required data for components
+      - name: Populate Run Directory
+        if: steps.cache-input.outputs.cache-hit != 'true'
+        run: |
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
+          mkdir -p ${{ github.workspace }}/run/INPUT
+          cd ${{ github.workspace }}/run/INPUT
+          python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml       
 
       # run application, fails due to missing input and configuration files
       # it is just for testing
