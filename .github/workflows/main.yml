@@ -140,7 +140,7 @@ jobs:
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           mkdir -p ${{ github.workspace }}/run/INPUT
           cd ${{ github.workspace }}/run/INPUT
-          python3 ${{ github.workspace }}/driver/scripts get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
+          python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
           cat file_checksum.lock
           
       # restore input data from cache
