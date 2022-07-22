@@ -139,7 +139,7 @@ jobs:
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           mkdir -p ${{ github.workspace }}/run/INPUT
-          cd ${{ github.workspace }}/INPUT
+          cd ${{ github.workspace }}/run/INPUT
           for i in *.nc; do md5sum -c $i >>input.checksums; done
           python3 ${{ github.workspace }}/driver/scripts get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
           cat input.checksums
