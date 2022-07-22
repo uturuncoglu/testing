@@ -142,6 +142,7 @@ jobs:
           cd ${{ github.workspace }}/run/INPUT
           python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
           cat file_checksum.lock
+          ls -al
           
       # restore input data from cache
       - name: Restore Input Data From Cache
