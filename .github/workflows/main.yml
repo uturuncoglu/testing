@@ -28,7 +28,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install unzip file gringo
-          sudo apt-get install build-essential binutils-dev gfortran python-dev python-yaml python3-boto3 wget ca-certificates
+          sudo apt-get install build-essential binutils-dev gfortran python-dev python-yaml python3-boto3 wget awscli ca-certificates
       
       # checkout spack to create build environment
       - name: Checkout Spack
