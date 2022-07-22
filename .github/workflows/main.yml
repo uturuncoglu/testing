@@ -135,22 +135,18 @@ jobs:
             
       # get required data for components
       - name: Populate Run Directory
-        #if: steps.cache-input.outputs.cache-hit != 'true'
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           mkdir -p ${{ github.workspace }}/run/INPUT
           cd ${{ github.workspace }}/run/INPUT
           python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
-          cat file_checksum.lock
-          ls -al
-          
-          
+
       # restore input data from cache
       - name: Restore Input Data From Cache
         id: cache-input
         uses: actions/cache@v2
         with:
-          path: ${{ github.workspace }}/INPUT
+          path: ${{ github.workspace }}/run/INPUT
           key: input-${{ hashFiles('**/file_checksum.lock') }}
           restore-keys: |
             input-          
