@@ -133,13 +133,24 @@ jobs:
           make
           make install
 
-      # run application, fails due to missing input and configuration files
-      # it is just for testing
-      #- name: Populate Run Directory
-      #  run: |
-      #    export PATH=$HOME/.spack-ci/view/bin:$PATH
-      #    mkdir ${{ github.workspace }}/run
-      #    mkdir ${{ github.workspace }}/INPUT_DATM
+      # restore input data from cache
+      - name: Restore Input Data From Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/INPUT
+          key: ${{ hashFiles('**/input.checksums') }}
+          restore-keys: |
+            input
+            
+      # get required data for components
+      - name: Populate Run Directory
+        run: |
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
+          mkdir -p ${{ github.workspace }}/run/INPUT
+          cd ${{ github.workspace }}/INPUT
+          for i in *.nc; do md5sum -c $i >>input.checksums; done
+          python3 ${{ github.workspace }}/driver/scripts get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
+          cat input.checksums
 
       # run application, fails due to missing input and configuration files
       # it is just for testing
