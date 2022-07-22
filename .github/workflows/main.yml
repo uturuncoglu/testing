@@ -135,15 +135,15 @@ jobs:
 
       # restore input data from cache
       - name: Restore Input Data From Cache
+        id: cache-input
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/INPUT
           key: ${{ hashFiles('**/input.checksums') }}
-          restore-keys: |
-            input
             
       # get required data for components
       - name: Populate Run Directory
+        if: steps.cache-input.outputs.cache-hit != 'true'
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           mkdir -p ${{ github.workspace }}/run/INPUT
