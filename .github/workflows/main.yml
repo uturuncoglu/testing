@@ -139,19 +139,16 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/run/INPUT
-          key: input-${{ hashFiles('**/file_checksum.lock') }}
-          #restore-keys: |
-          #  input-   
+          key: input-${{ hashFiles('**/file_checksum.lock') }}  
             
       # get required data for components
       - name: Populate Run Directory
         if: steps.cache-input.outputs.cache-hit != 'true'
         run: |
-          cat ${{ github.workspace }}/run/INPUT/file_checksum.lock
-          #export PATH=$HOME/.spack-ci/view/bin:$PATH
-          #mkdir -p ${{ github.workspace }}/run/INPUT
-          #cd ${{ github.workspace }}/run/INPUT
-          #python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml       
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
+          mkdir -p ${{ github.workspace }}/run/INPUT
+          cd ${{ github.workspace }}/run/INPUT
+          python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml       
 
       # run application, fails due to missing input and configuration files
       # it is just for testing
