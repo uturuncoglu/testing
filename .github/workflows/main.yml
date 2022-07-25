@@ -149,7 +149,6 @@ jobs:
           mkdir -p ${{ github.workspace }}/run/INPUT
           cd ${{ github.workspace }}/run/INPUT
           python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
-          ln -sf grid_spec.nc C96_mosaic.nc
 
       # Checkout configuration files and additional input files (IC, fixed orography files)
       - name: Checkout Generic NUOPC Driver
@@ -162,17 +161,22 @@ jobs:
       - name: Populate Configuration Files
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
-          cd ${{ github.workspace }}/run/INPUT
-          mv ${{ github.workspace }}/noahmp_data/INPUT_ex/* .
-          cd ${{ github.workspace }}/run
-          mv ${{ github.workspace }}/noahmp_data/datm.streams.xml .
-          mv ${{ github.workspace }}/noahmp_data/datm_in .
-          mv ${{ github.workspace }}/noahmp_data/fd.yaml .
-          mv ${{ github.workspace }}/noahmp_data/nuopc.configure .
+          ls ${{ github.workspace }}
+          ls ${{ github.workspace }}/run
+          ls ${{ github.workspace }}/run/INPUT
+          ls ${{ github.workspace }}/run/INPUT_ex
+          
+          #cd ${{ github.workspace }}/run/INPUT
+          #mv ${{ github.workspace }}/noahmp_data/INPUT_ex/* .
+          #cd ${{ github.workspace }}/run
+          #mv ${{ github.workspace }}/noahmp_data/datm.streams.xml .
+          #mv ${{ github.workspace }}/noahmp_data/datm_in .
+          #mv ${{ github.workspace }}/noahmp_data/fd.yaml .
+          #mv ${{ github.workspace }}/noahmp_data/nuopc.configure .
           
       # run application
-      - name: Run Application
-        run: |
-          export PATH=$HOME/.spack-ci/view/bin:$PATH
-          cd ${{ github.workspace }}/run
-          mpirun --oversubscribe -np 6 --allow-run-as-root ${{ env.INSTALL_DIR }}/bin/driver
+      #- name: Run Application
+      #  run: |
+      #    export PATH=$HOME/.spack-ci/view/bin:$PATH
+      #    cd ${{ github.workspace }}/run
+      #    mpirun --oversubscribe -np 6 --allow-run-as-root ${{ env.INSTALL_DIR }}/bin/driver
