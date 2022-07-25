@@ -88,7 +88,7 @@ jobs:
       - name: Checkout NoahMP
         uses: actions/checkout@v3
         with:
-          repository: NOAA-EMC/noahmp
+          repository: uturuncoglu/noahmp
           path: noahmp
           ref: feature/nuopc_cap
           
@@ -142,19 +142,37 @@ jobs:
           key: input-${{ hashFiles('**/file_checksum.lock') }}  
             
       # get required data for components
-      - name: Populate Run Directory
+      - name: Populate Input Directory
         if: steps.cache-input.outputs.cache-hit != 'true'
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           mkdir -p ${{ github.workspace }}/run/INPUT
           cd ${{ github.workspace }}/run/INPUT
-          python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml       
+          python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
+          ln -sf grid_spec.nc C96_mosaic.nc
 
-      # run application, fails due to missing input and configuration files
-      # it is just for testing
-      #- name: Run Application
-      #  run: |
-      #    export PATH=$HOME/.spack-ci/view/bin:$PATH
-      #    mkdir ${{ github.workspace }}/run
-      #    cd ${{ github.workspace }}/run
-      #    mpirun --oversubscribe -np 4 --allow-run-as-root ${{ env.INSTALL_DIR }}/bin/driver
+      # Checkout configuration files and additional input files (IC, fixed orography files)
+      - name: Checkout Generic NUOPC Driver
+        uses: actions/checkout@v3
+        with:
+          repository: uturuncoglu/noahmp_data
+          ref: main
+          
+      # get configuration files
+      - name: Populate Configuration Files
+        run: |
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
+          cd ${{ github.workspace }}/run/INPUT
+          mv ${{ github.workspace }}/noahmp_data/INPUT_ex/* .
+          cd ${{ github.workspace }}/run
+          mv ${{ github.workspace }}/noahmp_data/datm.streams.xml .
+          mv ${{ github.workspace }}/noahmp_data/datm_in .
+          mv ${{ github.workspace }}/noahmp_data/fd.yaml .
+          mv ${{ github.workspace }}/noahmp_data/nuopc.configure .
+          
+      # run application
+      - name: Run Application
+        run: |
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
+          cd ${{ github.workspace }}/run
+          mpirun --oversubscribe -np 6 --allow-run-as-root ${{ env.INSTALL_DIR }}/bin/driver
