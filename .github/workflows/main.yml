@@ -147,10 +147,11 @@ jobs:
       - name: Populate Run Directory
         if: steps.cache-input.outputs.cache-hit != 'true'
         run: |
-          export PATH=$HOME/.spack-ci/view/bin:$PATH
-          mkdir -p ${{ github.workspace }}/run/INPUT
-          cd ${{ github.workspace }}/run/INPUT
-          python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml       
+          cat ${{ github.workspace }}/run/INPUT/file_checksum.lock
+          #export PATH=$HOME/.spack-ci/view/bin:$PATH
+          #mkdir -p ${{ github.workspace }}/run/INPUT
+          #cd ${{ github.workspace }}/run/INPUT
+          #python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml       
 
       # run application, fails due to missing input and configuration files
       # it is just for testing
