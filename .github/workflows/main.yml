@@ -139,35 +139,44 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/run/INPUT
-          key: input-${{ hashFiles('**/file_checksum.lock') }}  
-            
-      # get required data for components
-      - name: Populate Input Directory
-        if: steps.cache-input.outputs.cache-hit != 'true'
-        run: |
-          export PATH=$HOME/.spack-ci/view/bin:$PATH
-          mkdir -p ${{ github.workspace }}/run/INPUT
-          cd ${{ github.workspace }}/run/INPUT
-          python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
+          key: input-${{ hashFiles('**/file_checksum.lock') }}
 
-      # Checkout configuration files and additional input files (IC, fixed orography files)
-      - name: Checkout Generic NUOPC Driver
-        uses: actions/checkout@v3
-        with:
-          repository: uturuncoglu/noahmp_data
-          ref: main
-          
-      # get configuration files
-      - name: Populate Configuration Files
+      - name: Debug
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           ls ${{ github.workspace }}
           ls ${{ github.workspace }}/run
           ls ${{ github.workspace }}/run/INPUT
-          ls ${{ github.workspace }}/run/INPUT_ex
+
+      # get required data for components
+      #- name: Populate Input Directory
+      #  if: steps.cache-input.outputs.cache-hit != 'true'
+      #  run: |
+      #    export PATH=$HOME/.spack-ci/view/bin:$PATH
+      #    mkdir -p ${{ github.workspace }}/run/INPUT
+      #    cd ${{ github.workspace }}/run/INPUT
+      #    python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
           
-          #cd ${{ github.workspace }}/run/INPUT
-          #mv ${{ github.workspace }}/noahmp_data/INPUT_ex/* .
+
+      # Checkout configuration files and additional input files (IC, fixed orography files)
+      #- name: Checkout Generic NUOPC Driver
+      #  uses: actions/checkout@v3
+      #  with:
+      #    repository: uturuncoglu/noahmp_data
+      #    ref: main
+          
+      # get configuration files
+      #- name: Populate Configuration Files
+      #  run: |
+      #    export PATH=$HOME/.spack-ci/view/bin:$PATH
+      #    mkdir -p ${{ github.workspace }}/run/INPUT
+          #ls ${{ github.workspace }}
+          #ls ${{ github.workspace }}/run
+          #ls ${{ github.workspace }}/run/INPUT
+          #ls ${{ github.workspace }}/run/INPUT_ex
+          
+      #    cd ${{ github.workspace }}/run/INPUT
+      #    mv ${{ github.workspace }}/noahmp_data/INPUT_ex/* .
           #cd ${{ github.workspace }}/run
           #mv ${{ github.workspace }}/noahmp_data/datm.streams.xml .
           #mv ${{ github.workspace }}/noahmp_data/datm_in .
