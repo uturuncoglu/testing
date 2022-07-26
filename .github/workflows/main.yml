@@ -173,10 +173,10 @@ jobs:
           mv ${{ github.workspace }}/noahmp_data/datm_in .
           mv ${{ github.workspace }}/noahmp_data/fd.yaml .
           mv ${{ github.workspace }}/noahmp_data/nuopc.configure .
+          mv ${{ github.workspace }}/noahmp_data/input.nml .
           
       # run application
       - name: Run Application
-        continue-on-error: true
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           cd ${{ github.workspace }}/run
