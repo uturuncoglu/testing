@@ -176,6 +176,7 @@ jobs:
           
       # run application
       - name: Run Application
+        continue-on-error: true
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
           cd ${{ github.workspace }}/run
