@@ -143,6 +143,22 @@ jobs:
           path: ${{ github.workspace }}/run/INPUT
           key: input-${{ hashFiles('**/file_checksum.lock') }}
 
+      # get required data for components
+      - name: Populate Input Directory
+        if: steps.cache-input.outputs.cache-hit != 'true'
+        run: |
+          export PATH=$HOME/.spack-ci/view/bin:$PATH
+          mkdir -p ${{ github.workspace }}/run/INPUT
+          cd ${{ github.workspace }}/run/INPUT
+          python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
+
+      # Checkout configuration files and additional input files (IC, fixed orography files)
+      - name: Checkout Generic NUOPC Driver
+        uses: actions/checkout@v3
+        with:
+          repository: uturuncoglu/noahmp_data
+          ref: main
+      
       - name: Debug
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
@@ -153,14 +169,6 @@ jobs:
           echo "list 3"
           ls ${{ github.workspace }}/run/INPUT
 
-      # get required data for components
-      #- name: Populate Input Directory
-      #  if: steps.cache-input.outputs.cache-hit != 'true'
-      #  run: |
-      #    export PATH=$HOME/.spack-ci/view/bin:$PATH
-      #    mkdir -p ${{ github.workspace }}/run/INPUT
-      #    cd ${{ github.workspace }}/run/INPUT
-      #    python3 ${{ github.workspace }}/driver/scripts/get_input.py --ifile ${{ github.workspace }}/driver/nuopc_drv.yaml
           
 
       # Checkout configuration files and additional input files (IC, fixed orography files)
