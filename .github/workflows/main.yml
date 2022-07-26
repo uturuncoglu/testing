@@ -46,6 +46,7 @@ jobs:
           
       # restore build environment from cache
       - name: Restore Build Environment From Cache
+        id: cache-spack
         uses: actions/cache@v2
         with:
           path: ~/.spack-ci
@@ -55,6 +56,7 @@ jobs:
             
       # create build environment
       - name: Install Spack Packages
+        if: steps.cache-spack.outputs.cache-hit != 'true'
         run: |
           . $GITHUB_WORKSPACE/spack/share/spack/setup-env.sh 
           spack -e ${{ github.workspace }} install -j3
@@ -144,8 +146,11 @@ jobs:
       - name: Debug
         run: |
           export PATH=$HOME/.spack-ci/view/bin:$PATH
+          echo "list 1"
           ls ${{ github.workspace }}
+          echo "list 2"
           ls ${{ github.workspace }}/run
+          echo "list 3"
           ls ${{ github.workspace }}/run/INPUT
 
       # get required data for components
