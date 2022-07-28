@@ -82,7 +82,8 @@ jobs:
             -DPIO_C_INCLUDE_DIR=$HOME/.spack-ci/view/include \
             -DPIO_Fortran_LIBRARY=$HOME/.spack-ci/view/lib \
             -DPIO_Fortran_INCLUDE_DIR=$HOME/.spack-ci/view/include \
-            -DCMAKE_Fortran_FLAGS="-ffree-line-length-none -ffixed-line-length-none" ../
+            -DCMAKE_Fortran_FLAGS="-ffree-line-length-none -ffixed-line-length-none" \
+            -DDISABLE_FoX=ON ../
           make
           make install
 
