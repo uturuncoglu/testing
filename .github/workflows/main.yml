@@ -5,9 +5,10 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  schedule: # this is required to prevent auto-removing cache entries after 7-days
-    - cron: '0 0 * * MON'
-    - cron: '0 0 * * FRI'
+  # disable for now since it is moved to NoahMP fork  
+  #schedule: # this is required to prevent auto-removing cache entries after 7-days
+  #  - cron: '0 0 * * MON'
+  #  - cron: '0 0 * * FRI'
 
 jobs:
   create_environment:
